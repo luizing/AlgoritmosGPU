@@ -8,7 +8,8 @@ import java.util.Objects;
 public class AlgoritmoBusca {
 
     public static String[] carregaTexto(String path) throws IOException {
-        String livro = Files.readString(Path.of(path));
+        String livro = Files.readString(Path.of(path))
+                .replaceAll("[^\\p{L}\\s]", " ");
         return livro.split("\\s+");
     }
 

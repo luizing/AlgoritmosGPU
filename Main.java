@@ -60,18 +60,17 @@ public class Main {
 
         System.out.println("Busca Paralela na GPU: ");
         long startGPU = System.nanoTime();
-        for (int i =0; i < titulos.length ; i++){
-            long inicio = System.nanoTime();
-            byte[] texto = BuscaGPU.carregarTexto(biblioteca[i]);
-            int valor = BuscaGPU.buscaGPU(texto, palavra);
-            long fim = System.nanoTime();
+        long inicioGPU = System.nanoTime();
+        int[] resultadosGPU = BuscaGPU.buscaGPU(biblioteca, palavra);
+        double tempoTotalGPU = (System.nanoTime() - inicioGPU) / 1e6;
 
+        for (int i =0; i < titulos.length ; i++){
             System.out.printf(
-                    "%s: %d resultados em %.2f milissegundos%n",
+                    "%s: %d resultados%n",
                     titulos[i],
-                    valor,
-                    ((fim - inicio) / 1e6));
+                    resultadosGPU[i]);
         }
+        System.out.printf("Busca GPU em lote: %.2f milissegundos%n", tempoTotalGPU);
         System.out.printf("\nTempo de execução total: %.2f milissegundos%n",
                 (System.nanoTime()-startGPU)/1e6);
 
